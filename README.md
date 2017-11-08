@@ -14,11 +14,25 @@ Bert, Cedric, Michiel
 ## Start Osquery
 Problems: troubleshoot with this guide: https://medium.com/@clong/osquery-for-security-b66fffdf2daf
 
-osqueryd --verbose
+Example Start command
+```bash
+# Windows
+C:\ProgramData\osquery\osqueryd\osqueryd.exe --config_path=C:/ProgramData/osquery/osquery.conf  --verbose
+# Linux
+
+```
 
 ## Start Logstash
 Make sure you have Java installed and working.  
 Copy the logstash config file and execute with it.
+
+```bash
+# Windows
+# Make sure your logstash path has no space in it, it bugs out.
+C:\logstash\logstash-5.6.4\bin\logstash.bat -f C:\logstash\osquery-elasticsearch.conf
+# Linux
+
+```
 
 ## Visualise with Kibana
 Go to http://192.168.0.124:5601/
