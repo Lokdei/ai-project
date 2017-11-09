@@ -20,6 +20,7 @@ Example Start command
 C:\ProgramData\osquery\osqueryd\osqueryd.exe --config_path=C:/ProgramData/osquery/osquery.conf  --verbose
 # Linux
 
+# MacOs
 ```
 
 ## Start Logstash
@@ -31,7 +32,11 @@ Copy the logstash config file and execute with it.
 # Make sure your logstash path has no space in it, it bugs out.
 C:\logstash\logstash-5.6.4\bin\logstash.bat -f C:\logstash\osquery-elasticsearch.conf
 # Linux
-
+# Added script to /bin
+logstash-start  
+# MacOs
+# Using homebrew
+logstash -f ~/.logstash/osquery-elasticsearch.config
 ```
 
 ## Visualise with Kibana
