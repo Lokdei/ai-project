@@ -1,0 +1,39 @@
+{
+  "network_processes": {
+    "query":
+      "SELECT processes.pid, processes.name as process_name, etc_protocols.name as protocol_name, listening_ports.port, listening_ports.address FROM processes JOIN listening_ports ON processes.pid = listening_ports.pid JOIN etc_protocols ON listening_ports.protocol = etc_protocols.number;",
+    "interval": 30,
+    "description": "List network processes + protocol"
+  },
+  "removable_usb_devices": {
+    "query": "SELECT * from usb_devices where removable = 1;",
+    "interval": 30
+  },
+  "top_processes": {
+    "query":
+      "SELECT pid, name, uid, resident_size from processes order by resident_size desc limit 10;",
+    "interval": 30,
+    "description": "Select top 10 processes"
+  },
+  "most_active_processes": {
+    "query":
+      "select count(pid) as total, name, pid from processes group by name order by total desc limit 10;",
+    "interval": 30,
+    "description":
+      "Return process count, name for the top 10 most active processes"
+  },
+  "select_non_persistent_processes": {
+    "query": "SELECT name, path, pid FROM processes WHERE on_disk = 0;",
+    "interval": 30,
+    "description": ""
+  },
+  "kernel_modules": {
+    "query": "select name from kernel_modules;",
+    "interval": 30,
+    "description": "Finding new kernel modules that have loaded"
+  },
+  "osquery_info": {
+    "query": "select * from osquery_info;",
+    "interval": 5
+  }
+}

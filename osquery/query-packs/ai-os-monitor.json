@@ -1,0 +1,20 @@
+{
+  "logged_in_users": {
+    "query": "select * from logged_in_users;",
+    "interval": 30,
+    "description": ""
+  },
+  "startup_items": {
+    "query": "select * from startup_items;",
+    "interval": 30,
+    "description": "# Select ALL startup items (to compare against a whitelist)"
+  },
+  "total_uptime_seconds": {
+    "query": "select total_seconds from uptime;",
+    "interval": 300
+  },
+  "interface_addresses": {
+    "query": "select * from interface_addresses;",
+    "interval": 3600
+  }
+}
