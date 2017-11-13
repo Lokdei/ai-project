@@ -8,8 +8,10 @@ Bert, Cedric, Michiel
 - [Logstash](https://www.elastic.co/downloads/logstash)
 
 **Server:**
+- [Java JRE](https://java.com/en/download/win10.jsp)
 - [Kibana](https://www.elastic.co/downloads/kibana)
 - All kibana plugins
+- [ElasticSearch](https://www.elastic.co/products/elasticsearch)
 
 ## Start Osquery
 Problems: troubleshoot with this guide: https://medium.com/@clong/osquery-for-security-b66fffdf2daf
