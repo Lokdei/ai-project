@@ -26,7 +26,6 @@ Function SendToElasticSearch {
 
   # Read data
   $logContent = Get-Content -Path $osqueryLogPath | Select-Object -last 30;
-  $jsonConcat = '[' + $logContent + ']'
 
   # Create web request
   $uri = "http://192.168.10.44:9200/osquery/query"
