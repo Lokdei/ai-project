@@ -9,35 +9,45 @@ $base64 = [System.Convert]::ToBase64String($bytes)
 
 $basicAuthValue = "Basic $base64"
 
+$macOsqueryLogPath = "/var/log/osquery/osqueryd.results.log"
+$macScriptLogPath = '~/Desktop/script-results.log'
 
+$windowsOsqueryLogPath = "C:\ProgramData\osquery\log\osqueryd.results.log"
+$windowsScriptLogPath = "C:\Users\michield\Desktop\testlog.log"
 
-$call = {
-    param($verb, $body)
+Function SendToElasticSearch {
+  Param(
+    [string]$osqueryLogPath,
+    [string]$scriptLogPath
+  )
 
-    $uri = "http://192.168.10.44:9200/osquery/query"
+  # Read data
+  $logContent = Get-Content -Path $osqueryLogPath | Select-Object -last 30;
+  $jsonConcat = '[' + $logContent + ']'
 
-    $headers = @{ 
-        'Authorization' = $basicAuthValue
-    }
+  # Create web request
+  $uri = "http://192.168.10.44:9200/osquery/query"
+  $headers = @{ 
+    'Authorization' = $basicAuthValue
+  }
 
-    Write-Host "`nCalling [$uri]" -f Green
-    if($body) {
-        if($body) {
-            Write-Host "BODY`n--------------------------------------------`n$body`n--------------------------------------------`n" -f Green
-        }
-    }
+  $i = 1
+  ForEach ($line in $($logContent -split "`r`n")) {
+    # Send web request and store the response
+    $response = Invoke-WebRequest `
+      -UseBasicParsing $uri `
+      -Method Post `
+      -Headers $headers `
+      -ContentType 'application/json' `
+      -Body $line 
 
-    $response = Invoke-WebRequest -UseBasicParsing $uri -Method Post -Headers $headers -ContentType 'application/json' -Body $body
-
-
-    #$response = wget -Uri "$uri/$uriParams" -method $verb -Headers $headers -ContentType 'application/json' -Body $body
-    $response.Content
+    # Counter
+    Write-Host $i
+    $i = $i + 1
+    
+    # Log the response
+    Add-Content $scriptLogPath $response.Content
+  }
 }
 
-
-Function post  {
-    Param($body)
-    &$call "Post" $body
-}
-
-$testBody = '{"hello":"world"}'
+SendToElasticSearch -scriptLogPath $macScriptLogPath -osqueryLogPath $macOsqueryLogPath
