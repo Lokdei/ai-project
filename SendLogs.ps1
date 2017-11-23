@@ -15,6 +15,9 @@ $macScriptLogPath = '~/Desktop/script-results.log'
 $windowsOsqueryLogPath = "C:\ProgramData\osquery\log\osqueryd.results.log"
 $windowsScriptLogPath = "C:\Users\$([Environment]::UserName)\Desktop\testlog.log"
 
+$ubuntuOsqueryLogPath = "/var/log/osquery/osqueryd.results.log"
+$ubuntuScriptLogPath =  "/var/log/sendLog/testlog.log"
+
 Function SendToElasticSearch {
   Param(
     [string]$osqueryLogPath,
