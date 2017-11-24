@@ -58,6 +58,9 @@ Function SendToElasticSearch {
   }
 
   $i = 1
+  $total_succesfull = 0
+  $total_failed = 0
+
   ForEach ($line in $($logContent -split "`r`n")) {
     # Send web request and store the response
     $response = Invoke-WebRequest `
@@ -71,9 +74,17 @@ Function SendToElasticSearch {
     Write-Host $i
     $i = $i + 1
 
+    if ($response.Content -contains '"successful":1') {
+      $total_succesfull = $total_succesfull + 1
+     } else {
+       $total_failed = $total_failed + 1
+     }
+
     # Log the response
-    Add-Content $scriptLogPath $(MakeLogObject -loggable $response.Content) 
+    # Add-Content $scriptLogPath $(MakeLogObject -loggable $response.Content) 
   }
+  $prettyPrint = ' queries sent: ' + $i + ', total succesfull: '+ $total_succesfull + ', total failed ' + $total_failed
+  Add-Content $scriptLogPath $(MakeLogObject -loggable $prettyPrint ) 
 
   Add-Content $scriptLogPath $(MakeLogObject -loggable 'run_end') 
 }
