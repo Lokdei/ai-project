@@ -15,10 +15,11 @@ REM https://raw.githubusercontent.com/BertGoens/ai-project/master/osquery/window
 
 REM Test Osqueryd
 C:\ProgramData\osquery\osqueryd\osqueryd.exe --verbose
+REM (C:\ProgramData\osquery\osqueryd\osqueryd.exe --verbose --allow-unsafe)
 REM Should tell you osqueryd is already running
 
-
 REM Create SendLogs.sp1 in C:\SendLog\SendLogs.ps1
+mkdir C:\SendLog
 REM (Optional: test the script once)
 
 REM Create a task to run the script every 5 minutes
