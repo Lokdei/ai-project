@@ -23,7 +23,7 @@ REM (Optional: test the script once)
 
 REM Create a task to run the script every 5 minutes
 REM General:    Run whether the user is logged in or not
-REM Trigger:    Daily, Every 5 minutes
+REM Trigger:    Daily, Every 5 minutes, Indefinitely
 REM Action:
 REM   Location:   C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe
 REM   Arguments:  -ExecutionPolicy Bypass C:\SendLog\SendLogs.ps1
