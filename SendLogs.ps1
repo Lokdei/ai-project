@@ -49,7 +49,7 @@ Function SendToElasticSearch {
   $logContent = Get-Content -Path $osqueryLogPath # | Select-Object -last 5
    
   # Remove file after read
-  #Remove-Item -Path $osqueryLogPath
+  Remove-Item -Path $osqueryLogPath
 
   # Create web request
   $uri = "http://192.168.10.44:9200/osquery/query"
