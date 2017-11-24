@@ -49,7 +49,7 @@ Function SendToElasticSearch {
   $logContent = Get-Content -Path $osqueryLogPath
    
   # Remove file after read
-  Remove-Item -Path $osqueryLogPath
+  #Remove-Item -Path $osqueryLogPath
 
   # Create web request
   $uri = "http://192.168.10.44:9200/osquery/query"
@@ -57,36 +57,54 @@ Function SendToElasticSearch {
     'Authorization' = $basicAuthValue
   }
 
-  $i = 1
+  $i = 0
   $total_succesfull = 0
   $total_failed = 0
 
   ForEach ($line in $($logContent -split "`r`n")) {
+    # Create the body
+    $jsonObject = ConvertFrom-Json -InputObject $line
+    # Add the current time
+    $jsonObject | add-member -Name "sent_at" -value $(Get-Date -Format s) -MemberType NoteProperty
+    
+    $stringobj = $jsonObject -replace('@', '')
+
+    Write-Host $jsonObject
+    # Dev mode: show the json
+    # Write-host (ConvertTo-Json $jsonObject)
+
+    $sendStringNoNewlines = (ConvertFrom-Json $jsonObject)
+    #$sendStringNoNewlines.replace("`n","")
+    write-host $sendStringNoNewlines
+
     # Send web request and store the response
     $response = Invoke-WebRequest `
       -UseBasicParsing $uri `
       -Method Post `
       -Headers $headers `
       -ContentType 'application/json' `
-      -Body $line 
+      -Body (ConvertTo-Json $jsonObject)
 
     # Counter
-    Write-Host $i
+    # Write-Host $i
     $i = $i + 1
 
     if ($response.Content -contains '"successful":1') {
       $total_succesfull = $total_succesfull + 1
-     } else {
-       $total_failed = $total_failed + 1
-     }
+    }
+    else {
+      $total_failed = $total_failed + 1
+    }
 
     # Log the response
-    # Add-Content $scriptLogPath $(MakeLogObject -loggable $response.Content) 
+    Add-Content $scriptLogPath $(MakeLogObject -loggable $response.Content) 
   }
-  $prettyPrint = ' queries sent: ' + $i + ', total succesfull: '+ $total_succesfull + ', total failed ' + $total_failed
+  $prettyPrint = ' queries sent: ' + $i + ', total succesfull: ' + $total_succesfull + ', total failed ' + $total_failed
+  Write-Host $prettyPrint
   Add-Content $scriptLogPath $(MakeLogObject -loggable $prettyPrint ) 
 
   Add-Content $scriptLogPath $(MakeLogObject -loggable 'run_end') 
 }
 
-SendToElasticSearch -scriptLogPath $windowsScriptLogPath -osqueryLogPath $windowsOsqueryLogPath
+SendToElasticSearch -scriptLogPath $macScriptLogPath -osqueryLogPath $macOsqueryLogPath
+#SendToElasticSearch -scriptLogPath $windowsScriptLogPath -osqueryLogPath $windowsOsqueryLogPath
