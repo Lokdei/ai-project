@@ -37,6 +37,8 @@ Function SendToElasticSearch {
     [string]$scriptLogPath
   )
 
+  Add-Content $scriptLogPath $(MakeLogObject -loggable 'run_start') 
+
   # Check for logs
   if (-Not (Test-Path $osqueryLogPath)) {
     Add-Content $scriptLogPath $(MakeLogObject -loggable 'no_file')
@@ -72,6 +74,8 @@ Function SendToElasticSearch {
     # Log the response
     Add-Content $scriptLogPath $(MakeLogObject -loggable $response.Content) 
   }
+
+  Add-Content $scriptLogPath $(MakeLogObject -loggable 'run_end') 
 }
 
 SendToElasticSearch -scriptLogPath $windowsScriptLogPath -osqueryLogPath $windowsOsqueryLogPath
