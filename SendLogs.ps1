@@ -4,7 +4,7 @@
 
 # For clients
 # Add the script to the Windows Task Scheduler at an interval (5min)
-# Powershell.exe -ExecutionPolicy Bypass C:\sendLog\SendLogs.ps1
+# Powershell.exe -ExecutionPolicy Bypass C:\SendLog\SendLogs.ps1
 
 $user = "elastic"
 $pass = "changeme"
