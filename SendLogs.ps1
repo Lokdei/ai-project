@@ -19,7 +19,7 @@ $macOsqueryLogPath = "/var/log/osquery/osqueryd.results.log"
 $macScriptLogPath = '~/Desktop/sendLog.log'
 
 $windowsOsqueryLogPath = "C:\ProgramData\osquery\log\osqueryd.results.log"
-$windowsScriptLogPath = "C:\Users\$([Environment]::UserName)\Desktop\sendLog.log"
+$windowsScriptLogPath = "C:\SendLog\sendLog.log"
 
 $ubuntuOsqueryLogPath = "/var/log/osquery/osqueryd.results.log"
 $ubuntuScriptLogPath = "/var/log/sendLog/testlog.log"
@@ -44,10 +44,10 @@ Function SendToElasticSearch {
   }
 
   # Read logdata
-  $logContent = Get-Content -Path $osqueryLogPath # | Select-Object -last 3;
+  $logContent = Get-Content -Path $osqueryLogPath
    
   # Remove file after read
-  #Remove-Item -Path $FileName
+  Remove-Item -Path $osqueryLogPath
 
   # Create web request
   $uri = "http://192.168.10.44:9200/osquery/query"
@@ -74,4 +74,4 @@ Function SendToElasticSearch {
   }
 }
 
-SendToElasticSearch -scriptLogPath $macScriptLogPath -osqueryLogPath $macOsqueryLogPath
+SendToElasticSearch -scriptLogPath $windowsScriptLogPath -osqueryLogPath $windowsOsqueryLogPath
