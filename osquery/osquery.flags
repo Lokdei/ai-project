@@ -3,3 +3,4 @@
 --utc=true
 --logger_min_status=1
 --host_identifier=instance
+--allow_unsafe
