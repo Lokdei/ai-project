@@ -1,0 +1,5 @@
+--config_refresh=0
+--force=true
+--utc=true
+--logger_min_status=1
+--host_identifier=instance
