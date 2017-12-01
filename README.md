@@ -26,7 +26,7 @@ Troubleshoot the config file:
 
 ### Problem: Access Denied
 Access denied to C:\ProgramData\osquery\osqueryd\
---> Give SYSTEM permissions to the osqueryd folder
+--> Give SYSTEM full permissions to the osqueryd folder
 
 ### Osqueryd has unsafe permissions
 (We added the following flag by default to prevent this)
