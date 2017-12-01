@@ -12,17 +12,25 @@ Bert, Cedric, Michiel
 - All kibana plugins
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch)
 
-## Start Osquery
-Problems: troubleshoot with this guide: https://medium.com/@clong/osquery-for-security-b66fffdf2daf
+# Install
+Follow the [WindowsInstaller.bat](WindowsInstaller.bat)
 
-Example Start command
-```bash
-# Windows
-C:\ProgramData\osquery\osqueryd\osqueryd.exe --config_path=C:/ProgramData/osquery/osquery.conf  --verbose
-# Linux
+## Troubleshoot Osquery
+### General guide
+Troubleshoot with this guide: https://medium.com/@clong/osquery-for-security-b66fffdf2daf
 
-# MacOs
-```
+### Problem: Config file
+(Requires unix machine)
+Troubleshoot the config file: 
+`sudo osqueryctl config-check ~/Programmeren/GitHub/ai-project/osquery/honeypot.osquery.conf `
+
+### Problem: Access Denied
+Access denied to C:\ProgramData\osquery\osqueryd\
+--> Give SYSTEM permissions to the osqueryd folder
+
+### Osqueryd has unsafe permissions
+(We added the following flag by default to prevent this)
+Add the --allow_unsafe flag to the osquery.flags 
 
 ## Visualise with Kibana
 Go to http://192.168.0.124:5601/
