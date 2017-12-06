@@ -67,12 +67,13 @@ Write-Output "Create a task to run the script every 5 minutes"
 $action = New-ScheduledTaskAction –Execute "$pshome\powershell.exe" -Argument "-ExecutionPolicy Bypass -File $scriptFileLocation;"
 # Set up the trigger
 $repeat = (New-TimeSpan -Minutes 5)
-$duration = ([timeSpan]::maxvalue)
-$trigger = New-ScheduledTaskTrigger -Once -RepetitionInterval $repeat -RepetitionDuration $duration
+$duration = (New-TimeSpan -Days 365)
+$startDate = ([System.DateTime]::Now)
+$trigger = New-ScheduledTaskTrigger -Once -At $startDate  -RepetitionInterval $repeat -RepetitionDuration $duration
 
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -RunOnlyIfNetworkAvailable -DontStopOnIdleEnd
-$User = ".\Administrator"
-$jobname = "Send osquery data to elasticsearch"
+$User = "Administrator"
+$jobname = "Sendlogs"
 Register-ScheduledTask -TaskName $jobname -Action $action -Trigger $trigger -RunLevel Highest -User $User -Settings $settings
 
 # Create firewall rule to allow out outbound traffic
