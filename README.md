@@ -43,4 +43,4 @@ Access denied to C:\ProgramData\osquery\osqueryd\
 Add the --allow_unsafe flag to the osquery.flags 
 
 ## Visualise with Kibana
-Go to http://192.168.0.124:5601/
+Go to http://192.168.10.44:5601/
