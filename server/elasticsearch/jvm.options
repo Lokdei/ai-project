@@ -1,0 +1,26 @@
+# IMPORTANT
+# Change the JVM Heap size (Default 4 GB)
+# Because our server only has 3 GB and runs Windows
+-Xmx1200m
+-Xmx1200m
+
+
+# Other settings we didn't touch
+# Just make sure the Xmx memory command is edited if you have no RAM like us
+
+-XX:+UseConcMarkSweepGC
+-XX:CMSInitiatingOccupancyFraction=75
+-XX:+UseCMSInitiatingOccupancyOnly
+-XX:+AlwaysPreTouch
+-Xss1m
+-Djava.awt.headless=true
+-Dfile.encoding=UTF-8
+-Djna.nosys=true
+-Djdk.io.permissionsUseCanonicalPath=true
+-Dio.netty.noUnsafe=true
+-Dio.netty.noKeySetOptimization=true
+-Dio.netty.recycler.maxCapacityPerThread=0
+-Dlog4j.shutdownHookEnabled=false
+-Dlog4j2.disable.jmx=true
+-Dlog4j.skipJansi=true
+-XX:+HeapDumpOnOutOfMemoryError
