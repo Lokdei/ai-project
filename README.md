@@ -15,11 +15,6 @@ Bert, Cedric, Michiel
 # Install
 Follow the [WindowsInstaller.bat](WindowsInstaller.bat)
 
-## TODO
-- Write better queries for osqueryd.
-- Document elasticsearch setup and use.
-- Document kibana setup and use.
-
 ## Ideas
 - Try to link osquery with Prometheus to get advanced info about the web server and / or the database.
 - Change our SendLogs to send logs to an index of the day (Format: osquery-YYYY-MM-DD) akin logstash.
