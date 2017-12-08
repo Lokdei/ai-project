@@ -6,10 +6,11 @@ FUNCTION Test-Administrator {
 # Check if the script is running with admin privileges
 # If it's not, display a warning and exit
 IF (Test-Administrator) {
-  Write-Output "Administrator PRIVILEGES Detected!"
+  Write-Output "Administrator privileges: Check!"
 }
 ELSE {
   Write-Output "NOT AN ADMIN!"
+  Write-Output "Please execute the script with administrator privleges."
   PAUSE
   EXIT 1
 }
@@ -30,8 +31,8 @@ if (Test-Path $osqExampleConfPath) {
   Remove-Item $osqExampleConfPath
 }
 
-$osqConfigFileUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/osquery/honeypot.osquery.conf"
-$osqFlagFileUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/osquery/osquery.flags"
+$osqConfigFileUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/osquery/honeypot.osquery.conf"
+$osqFlagFileUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/osquery/osquery.flags"
 $osqConfigFileLocation = "C:\ProgramData\osquery\osquery.conf"
 $osqFlagFileLocation = "C:\ProgramData\osquery\osquery.flags"
 
@@ -55,7 +56,7 @@ If (!(Test-Path $scriptFolderLocation)) {
   New-Item -ItemType Directory -Force -Path $scriptFolderLocation
 }
 
-$sendLogsUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/SendLogs.ps1"
+$sendLogsUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/scripts/send%20logs/SendLogs.ps1"
 if (Test-Path $scriptFileLocation) {
   Remove-Item $scriptFileLocation
 }
