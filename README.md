@@ -9,11 +9,11 @@ Bert, Cedric, Michiel
 **Server:**
 - [Java JRE](https://java.com/en/download/win10.jsp)
 - [Kibana](https://www.elastic.co/downloads/kibana)
-- All kibana plugins
+- [All kibana plugins](https://www.elastic.co/products/x-pack)
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch)
 
 # Install
-Follow the [WindowsInstaller.bat](WindowsInstaller.bat)
+Follow the [WindowsInstaller.bat](./client/scripts/install/WindowsInstaller.ps1)
 
 ## Ideas
 - Try to link osquery with Prometheus to get advanced info about the web server and / or the database.
