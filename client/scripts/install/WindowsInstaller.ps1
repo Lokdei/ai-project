@@ -1,3 +1,7 @@
+# For developers only
+# Open powershell as admin & execute the following once
+# Set-ExecutionPolicy Unrestricted
+
 FUNCTION Test-Administrator {  
   $user = [Security.Principal.WindowsIdentity]::GetCurrent();
   (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
@@ -21,6 +25,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 Write-Output "Download Osquery"
 # Add the "-y" flag to automatically confirm all prompts
 choco install osquery -y
+
+# Allow Osquery Environment Variables to be loaded in the shell
+refreshenv
 
 Write-Output "Install Osqueryd"
 C:\ProgramData\osquery\osqueryd\osqueryd.exe --install
@@ -75,6 +82,6 @@ schtasks.exe /create /RU "NT AUTHORITY\SYSTEM" /TN SendLogs /XML $XMLFileLocatio
 # Create firewall rule to allow out outbound traffic
 netsh advfirewall firewall add rule name="Allow sending logs to ElasticSearch port 9200" dir=out remoteport=9200 protocol=TCP action=allow 
 
-Write-Output "Installed Successfully"
+Write-Output "Installation completed"
 
 PAUSE
