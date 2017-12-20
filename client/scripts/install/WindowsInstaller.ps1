@@ -56,28 +56,24 @@ If (!(Test-Path $scriptFolderLocation)) {
   New-Item -ItemType Directory -Force -Path $scriptFolderLocation
 }
 
-$sendLogsUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/scripts/send%20logs/SendLogs.ps1"
+$ScriptSendLogsUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/scripts/send%20logs/SendLogs.ps1"
 if (Test-Path $scriptFileLocation) {
   Remove-Item $scriptFileLocation
 }
-Invoke-WebRequest -Uri $sendLogsUri -OutFile $scriptFileLocation -UseBasicParsing
+Invoke-WebRequest -Uri $ScriptSendLogsUri -OutFile $scriptFileLocation -UseBasicParsing
 
-Write-Output "Create a task to run the script every 5 minutes"
+Write-Output "Create a task to run the script every minute"
+$XMLSendLogsUri = "https://raw.githubusercontent.com/BertGoens/ai-project/master/client/scripts/install/SendLogTask.xml"
+$XMLFileLocation = $scriptFolderLocation + "SendLogTask.xml"
+if (Test-Path $XMLFileLocation) {
+  Remove-Item $XMLFileLocation
+}
+Invoke-WebRequest -Uri $XMLSendLogsUri -OutFile $XMLFileLocation -UseBasicParsing
 
-# set up the action
-$action = New-ScheduledTaskAction –Execute "$pshome\powershell.exe" -Argument "-ExecutionPolicy Bypass -File $scriptFileLocation;"
-# Set up the trigger
-$repeat = (New-TimeSpan -Minutes 5)
-$duration = (New-TimeSpan -Days 365)
-$startDate = ([System.DateTime]::Now)
-$trigger = New-ScheduledTaskTrigger -Once -At $startDate  -RepetitionInterval $repeat -RepetitionDuration $duration
-
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -RunOnlyIfNetworkAvailable -DontStopOnIdleEnd
-$User = "Administrator"
-$jobname = "Sendlogs"
-Register-ScheduledTask -TaskName $jobname -Action $action -Trigger $trigger -RunLevel Highest -User $User -Settings $settings
+schtasks.exe /create /RU "NT AUTHORITY\SYSTEM" /TN SendLogs /XML $XMLFileLocation
 
 # Create firewall rule to allow out outbound traffic
+netsh advfirewall firewall add rule name="Allow sending logs to ElasticSearch port 9200" dir=out remoteport=9200 protocol=TCP action=allow 
 
 Write-Output "Installed Successfully"
 
