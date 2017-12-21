@@ -13,7 +13,7 @@ Bert, Cedric, Michiel
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch)
 
 # Install
-Follow the [WindowsInstaller.bat](./client/scripts/install/WindowsInstaller.ps1)
+Follow the [WindowsInstaller.ps1](./client/scripts/install/WindowsInstaller.ps1)
 
 ## Ideas
 - Try to link osquery with Prometheus to get advanced info about the web server and / or the database.
